@@ -1,0 +1,125 @@
+﻿@model shopping_online.Context.Account
+
+@{
+    ViewBag.Title = "profile";
+    //var ima = ViewBag.account_image;
+    Layout = "~/Views/Shared/Profile.cshtml";
+}
+@using (Html.BeginForm("profile", "Login", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="container bootstrap snippet">
+        
+        <div class="row">
+
+            <!--left col-->
+
+            <div class="col-sm-3">
+
+
+                <img src="~/UploadedFiles/@ViewBag.account_image" class="avatar1 img-circle img-thumbnail" alt="avatar1" val />
+                @Html.EditorFor(model => model.account_image, new { htmlAttributes = new { @class = "form-control", Type = "file" } })
+                @Html.ValidationMessageFor(model => model.account_image, "", new { @class = "text-danger" })
+
+            </div><!--/col-3-->
+            <div class="col-sm-9">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#home">Profile</a></li>
+                </ul>
+
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="home">
+                        <hr>
+
+                        @Html.AntiForgeryToken()
+                        <form class="form" action="##" method="post" id="registrationForm">
+                            <div class="form-group">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.account_id)
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.account_role_id)
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.account_password)
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.account_username)
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.account_status)
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.account_createdate)
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.account_gender)
+
+                                <div class="col-xs-6">
+                                    <label for="first_name"><h4>Name</h4></label>
+                                    @Html.EditorFor(model => model.account_name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.account_name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+
+                                <div class="col-xs-6">
+                                    <label for="last_name"><h4>Email</h4></label>
+                                    @Html.EditorFor(model => model.account_email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.account_email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-xs-6">
+                                    <label for="phone"><h4>Phone</h4></label>
+                                    @Html.EditorFor(model => model.account_phone, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.account_phone, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    <label for="mobile"><h4>Address</h4></label>
+                                    @Html.EditorFor(model => model.account_address, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.account_address, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            @*<div class="form-group">
+                                <div class="col-xs-6">
+                                    <label for="email"><h4>Date of birth</h4></label>
+                                    @Html.EditorFor(model => model.account_DOB, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.account_DOB, "", new { @class = "text-danger" })
+                                </div>
+                            </div>*@
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.account_gender, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10" style="display:inline-block">
+                                    @if (ViewBag.gender == true)
+                                    {
+                                        <div style="display: inline-block; margin-right: 10px; margin-left: 30px">Male<input style="width: 20px; height: 20px" type="radio" name="Gender" value="Male" checked="checked" /></div>
+                                        <div style="display: inline-block; margin-right: 10px; margin-left: 30px">Female<input style="width: 20px; height: 20px" type="radio" name="Gender" value="Female" /></div>
+                                    }
+                                    else
+                                    {
+                                        <div style="display: inline-block; margin-right: 10px; margin-left: 30px">Male<input style="width: 20px; height: 20px" type="radio" name="Gender" value="Male"  /></div>
+                                        <div style="display: inline-block; margin-right: 10px; margin-left: 30px">Female<input style="width: 20px; height: 20px" type="radio" name="Gender" value="Female" checked="checked" /></div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    <br>
+                                    <button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
+                                </div>
+                            </div>
+                        </form>
+                        <hr>
+                    </div>
+
+                </div><!--/tab-pane-->
+            </div><!--/tab-content-->
+
+        </div><!--/col-9-->
+    </div><!--/row-->
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+}

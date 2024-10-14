@@ -1,0 +1,137 @@
+﻿
+@using shopping_online.Models;
+@using PagedList.Mvc;
+@model PagedList.PagedList<shopping_online.Context.Account>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Account.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-md-12">
+        <header class="panel-heading">
+            List Account
+        </header>
+        <div class="panel-body table-responsive">
+            @if (User.IsInRole("Admin"))
+            {
+                <div class=" add-task-row">
+
+                    <p class="btn btn-success btn-sm pull-left">
+                        @Html.ActionLink("Create New", "Create")
+                    </p>
+                </div>}
+            @using (Html.BeginForm("Accounts", "Index", FormMethod.Get))
+            {
+                <div class="box-tools m-b-15">
+                    <div class="input-group">
+                        <input type="text" name="table_search" value="@ViewBag.table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" />
+                        <div class="input-group-btn">
+                            <button class="btn btn-sm btn-default" style="height: 30px;"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <p>Account</p>
+                        </th>
+                        <th>
+                            <p>Email</p>
+                        </th>
+                        <th>
+                            <p>FullName</p>
+                        </th>
+                        <th>
+                            <p>Phone</p>
+                        </th>
+                        <th>
+                            <p>Address</p>
+                        </th>
+                        <th>
+                            <p>Gender</p>
+                        </th>
+                        <th>
+                            <p>Status</p>
+                        </th>
+                        <th>
+                            <p>Create date</p>
+                        </th>
+                        <th>
+                            <p>Role</p>
+                        </th>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <th> <p>Action</p></th>
+}
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.account_username)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.account_email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.account_name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.account_phone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.account_address)
+                            </td>
+                            @if (item.account_gender == true)
+                            {
+                                <td>Male</td>
+                            }
+                            @if (item.account_gender == false)
+                            {
+                                <td>Female</td>
+                            }
+                            @if (item.account_status == true)
+                            {
+                                <td>Active</td>
+                            }
+                            @if (item.account_status == false)
+                            {
+                                <td>Ban</td>
+                            }
+                            <td>
+                                @Html.DisplayFor(modelItem => item.account_createdate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Role.Role_name)
+                            </td>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <td>
+                                    <a href="~/Accounts/Edit/@item.account_id"><button class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></button></a>
+                                    <a href="~/Accounts/Delete/@item.account_id"><button class="btn btn-default btn-xs"><i class="fa fa-times"></i></button></a>
+                                </td>
+}
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <hr />
+            <div>
+                @if (Model.PageCount > 1)
+                {
+                    <ul class="pagination pagination-sm pull-right">
+                        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber )/@Model.PageCount
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page, @table_search = @ViewBag.table_search }))
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+</div>
